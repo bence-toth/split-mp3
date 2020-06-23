@@ -1,20 +1,38 @@
 {
   "name": "split-mp3",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "A command line tool to split mp3 files",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "TODO"
-  },
-  "keywords": [
-    "TODO"
-  ],
-  "author": "TODO",
-  "license": "MIT",
+	"keywords": [
+		"split mp3",
+		"split audio",
+		"ffmpeg",
+		"cli"
+	],
+	"homepage": "https://github.com/bence-toth/split-mp3#readme",
+	"repository": {
+		"type": "git",
+		"url": "github:bence-toth/split-mp3"
+	},
+	"bugs": {
+		"url": "https://github.com/bence-toth/split-mp3/issues"
+	},
+	"license": "MIT",
+	"author": {
+		"name": "Bence A. Tóth",
+		"email": "tothab@gmail.com",
+		"url": "https://github.com/bence-toth"
+	},
+	"bin": "src/index.js",
+	"engines": {
+		"node": ">=12",
+		"npm": ">=5.2"
+	},
+	"files": [
+		"LICENSE",
+		"README.md",
+		"changelog.md",
+		"src"
+	],
   "dependencies": {
     "shelljs": "^0.8.4"
   }
