@@ -19,6 +19,23 @@ if (!shell.which('ffmpeg')) {
   shell.exit(1)
 }
 
+const areAllRequirementsMet = (
+  process.argv[2]
+    && fs.existsSync(process.argv[2])
+    && (process.argv[2].slice(-4).toLowerCase() === '.mp3')
+    && process.argv[3]
+    && fs.existsSync(process.argv[3])
+)
+
+if (!areAllRequirementsMet) {
+  // TODO: Add more info here
+  console.log('Usage:')
+  console.log('')
+  console.log('  npx split-mp3 $MP3_FILE $TRACK_DATA_FILE')
+  console.log('')
+  shell.exit(1)
+}
+
 const audioFilename = process.argv[2]
 const tracksFilename = process.argv[3]
 
