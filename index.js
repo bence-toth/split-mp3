@@ -43,7 +43,9 @@ fs.readFile(tracksFilename, 'utf8', (_, tracksRawData) => {
   const tracks = extractTracksData(tracksRawData)
   const tracksWithCommands = tracks.map(addCommandToTrack({audioFilename}))
   tracksWithCommands.forEach(({command, fileName}) => {
-    const executedCommand = shell.exec(command)
+    const executedCommand = shell.exec(command, {
+      silent: true
+    })
     if (executedCommand.code === 0) {
       console.log(`File was saved: "${fileName}"`)
     }
