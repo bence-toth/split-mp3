@@ -56,6 +56,12 @@ const suffixTitleWithExtension = track => ({
   fileName: `${track.title}.mp3`
 })
 
+const generateCommandFromTrack = ({
+  startTime,
+  endTime,
+  fileName
+}) => `ffmpeg -i ${audioFilename} -acodec copy -ss ${startTime} -to ${endTime} "${fileName}"`
+
 fs.readFile(tracksFilename, 'utf8', (_, tracksRawData) => {
   const tracks = (
     tracksRawData
@@ -66,5 +72,6 @@ fs.readFile(tracksFilename, 'utf8', (_, tracksRawData) => {
       .map(prefixTitleWithTrackNumber)
       .map(suffixTitleWithExtension)
   )
-  console.log(tracks)
+  const commands = tracks.map(generateCommandFromTrack)
+  console.log(commands)
 })
