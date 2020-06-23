@@ -37,6 +37,7 @@ const suffixTitleWithExtension = track => ({
 const extractTracksData = tracksRawData => (
   tracksRawData
     .split('\n')
+    .trim()
     .filter(isNotBlankLine)
     .map(splitLineToStartTimeAndTitle)
     .map(addEndTime)
