@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 const fs = require('fs')
 const shell = require('shelljs')
 const {extractTracksData, addCommandToTrack} = require('./utility')
