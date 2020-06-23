@@ -50,6 +50,12 @@ const prefixTitleWithTrackNumber = (track, trackIndex) => ({
   title: `${formatTrackNumber(trackIndex + 1)} - ${track.title}`
 })
 
+const suffixTitleWithExtension = track => ({
+  startTime: track.startTime,
+  endTime: track.endTime,
+  fileName: `${track.title}.mp3`
+})
+
 fs.readFile(tracksFilename, 'utf8', (_, tracksRawData) => {
   const tracks = (
     tracksRawData
@@ -58,6 +64,7 @@ fs.readFile(tracksFilename, 'utf8', (_, tracksRawData) => {
       .map(splitLineToStartTimeAndTitle)
       .map(addEndTime)
       .map(prefixTitleWithTrackNumber)
+      .map(suffixTitleWithExtension)
   )
   console.log(tracks)
 })
