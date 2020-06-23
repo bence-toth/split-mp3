@@ -14,7 +14,8 @@ const {extractTracksData, generateCommandFromTrack} = require('./utility')
 // ```
 
 if (!shell.which('ffmpeg')) {
-  shell.echo('Sorry, this tool requires ffmpeg')
+  console.log('Sorry, this tool requires ffmpeg')
+  console.log('')
   shell.exit(1)
 }
 
