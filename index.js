@@ -1,5 +1,6 @@
 const fs = require('fs')
 const shell = require('shelljs')
+const {extractTracksData, generateCommandFromTrack} = require('./utility')
 
 // Tracks file example:
 // ```
@@ -20,58 +21,8 @@ if (!shell.which('ffmpeg')) {
 const audioFilename = process.argv[2]
 const tracksFilename = process.argv[3]
 
-const formatTrackNumber = number => `0${number}`.slice(-2)
-
-const isNotBlankLine = line => line.length > 1
-
-const splitLineToStartTimeAndTitle = line => {
-  const firstSpacePosition = line.indexOf(' ')
-  const startTimestamp = line.substr(0, firstSpacePosition)
-  const [startMinutes, startSeconds] = startTimestamp.split(':')
-  const startTime = (Number(startMinutes) * 60) + Number(startSeconds)
-  const title = line.substr(firstSpacePosition + 1)
-  return {
-    startTime,
-    title
-  }
-}
-
-const addEndTime = (track, trackIndex, tracks) => ({
-  ...track,
-  endTime: (
-    tracks[trackIndex + 1]
-      ? tracks[trackIndex + 1].startTime
-      : null
-  )
-})
-
-const prefixTitleWithTrackNumber = (track, trackIndex) => ({
-  ...track,
-  title: `${formatTrackNumber(trackIndex + 1)} - ${track.title}`
-})
-
-const suffixTitleWithExtension = track => ({
-  startTime: track.startTime,
-  endTime: track.endTime,
-  fileName: `${track.title}.mp3`
-})
-
-const generateCommandFromTrack = ({
-  startTime,
-  endTime,
-  fileName
-}) => `ffmpeg -i ${audioFilename} -acodec copy -ss ${startTime} -to ${endTime} "${fileName}"`
-
 fs.readFile(tracksFilename, 'utf8', (_, tracksRawData) => {
-  const tracks = (
-    tracksRawData
-      .split('\n')
-      .filter(isNotBlankLine)
-      .map(splitLineToStartTimeAndTitle)
-      .map(addEndTime)
-      .map(prefixTitleWithTrackNumber)
-      .map(suffixTitleWithExtension)
-  )
-  const commands = tracks.map(generateCommandFromTrack)
+  const tracks = extractTracksData(tracksRawData)
+  const commands = tracks.map(generateCommandFromTrack({audioFilename}))
   console.log(commands)
 })
