@@ -1,6 +1,6 @@
 const formatTrackNumber = number => (`0${number}`.slice(-2))
 
-const isNotBlankLine = line => (line.length > 1)
+const isNotBlankLine = line => (line.length > 0)
 
 const splitLineToStartTimeAndTitle = line => {
   const firstSpacePosition = line.indexOf(' ')
@@ -37,7 +37,7 @@ const suffixTitleWithExtension = track => ({
 const extractTracksData = tracksRawData => (
   tracksRawData
     .split('\n')
-    .trim()
+    .map(line => line.trim())
     .filter(isNotBlankLine)
     .map(splitLineToStartTimeAndTitle)
     .map(addEndTime)
