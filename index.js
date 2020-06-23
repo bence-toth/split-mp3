@@ -1,4 +1,5 @@
 const fs = require('fs')
+const shell = require('shelljs')
 
 // Tracks file example:
 // ```
@@ -10,6 +11,11 @@ const fs = require('fs')
 // 24:53 Acceleration
 //
 // ```
+
+if (!shell.which('ffmpeg')) {
+  shell.echo('Sorry, this tool requires ffmpeg')
+  shell.exit(1)
+}
 
 const audioFilename = process.argv[2]
 const tracksFilename = process.argv[3]
