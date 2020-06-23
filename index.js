@@ -1,6 +1,6 @@
 const fs = require('fs')
 const shell = require('shelljs')
-const {extractTracksData, generateCommandFromTrack} = require('./utility')
+const {extractTracksData, addCommandToTrack} = require('./utility')
 
 // Tracks file example:
 // ```
@@ -24,6 +24,20 @@ const tracksFilename = process.argv[3]
 
 fs.readFile(tracksFilename, 'utf8', (_, tracksRawData) => {
   const tracks = extractTracksData(tracksRawData)
-  const commands = tracks.map(generateCommandFromTrack({audioFilename}))
-  console.log(commands)
+  const tracksWithCommands = tracks.map(addCommandToTrack({audioFilename}))
+  tracksWithCommands.forEach(({command, fileName}) => {
+    const executedCommand = shell.exec(command)
+    if (executedCommand.code === 0) {
+      console.log(`File was saved: "${fileName}"`)
+    }
+    else {
+      console.log(`Saving file "${fileName}" has failed`)
+      console.log('')
+      console.log('Maybe try running the following command manually and see what happens:')
+      console.log('')
+      console.log(`  ${command}`)
+      console.log('')
+      shell.exit(1)
+    }
+  })
 })

@@ -44,12 +44,15 @@ const extractTracksData = tracksRawData => (
     .map(suffixTitleWithExtension)
 )
 
-const generateCommandFromTrack = ({audioFilename}) => ({
+const addCommandToTrack = ({audioFilename}) => ({
   startTime,
   endTime,
   fileName
-}) => (
-  [
+}) => ({
+  startTime,
+  endTime,
+  fileName,
+  command: [
     `ffmpeg`,
     `-i ${audioFilename}`,
     `-acodec copy`,
@@ -57,9 +60,9 @@ const generateCommandFromTrack = ({audioFilename}) => ({
     ...(endTime ? [`-to ${endTime}`] : []),
     `"${fileName}"`
   ].join(' ')
-)
+})
 
 module.exports = {
   extractTracksData,
-  generateCommandFromTrack
+  addCommandToTrack
 }
