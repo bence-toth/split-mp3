@@ -33,6 +33,7 @@ const tracksFilename = process.argv[3]
 fs.readFile(tracksFilename, 'utf8', (_, tracksRawData) => {
   const tracks = extractTracksData(tracksRawData)
   const tracksWithCommands = tracks.map(addCommandToTrack({audioFilename}))
+  let allCommandsSuccessful = true
   tracksWithCommands.forEach(({command, fileName}) => {
     const executedCommand = shell.exec(command, {
       silent: true
@@ -47,7 +48,10 @@ fs.readFile(tracksFilename, 'utf8', (_, tracksRawData) => {
       console.log('')
       console.log(`  ${command}`)
       console.log('')
-      shell.exit(1)
+      allCommandsSuccessful = false
     }
   })
+  if (!allCommandsSuccessful) {
+    shell.exit(1)
+  }
 })
