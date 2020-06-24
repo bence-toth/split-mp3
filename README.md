@@ -41,7 +41,7 @@ This will create six files:
 
 A few things to note regarding the tracks file:
 
-- The start times for tracks must use the `MM:SS` format. Note that the separator is `:`.
+- The start times for tracks must use the `MM:SS` or `HH:MM:SS` format. Note that the separator is `:`.
 
 - The start times and the titles must be separated by exactly one space.
 
@@ -57,7 +57,7 @@ A few things to note regarding the tracks file:
 
 - Blank lines and tailing white space will be ignored.
 
-- Leading zeros for the start times will be ignored (`1:23` and `01:23` are both accepted).
+- Leading zeros for the start times will be ignored (`01:23`, `01:23:45` are both accepted).
 
 
 ## Requirements
