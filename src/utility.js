@@ -2,11 +2,24 @@ const formatTrackNumber = number => (`0${number}`.slice(-2))
 
 const isNotBlankLine = line => (line.length > 0)
 
+const getTimeFromTimestamp = timestamp => {
+  const segments = timestamp.split(':')
+  if (segments.length === 3) {
+    const [hours, minutes, seconds] = segments
+    return (
+      (Number(hours) * 60 * 60)
+        + (Number(minutes) * 60)
+        + Number(seconds)
+    )
+  }
+  const [minutes, seconds] = segments
+  return (Number(minutes) * 60) + Number(seconds)
+}
+
 const splitLineToStartTimeAndTitle = line => {
   const firstSpacePosition = line.indexOf(' ')
   const startTimestamp = line.substr(0, firstSpacePosition)
-  const [startMinutes, startSeconds] = startTimestamp.split(':')
-  const startTime = (Number(startMinutes) * 60) + Number(startSeconds)
+  const startTime = getTimeFromTimestamp(startTimestamp)
   const title = line.substr(firstSpacePosition + 1)
   return {
     startTime,

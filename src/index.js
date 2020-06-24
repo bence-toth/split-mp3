@@ -19,10 +19,11 @@ const areAllRequirementsMet = (
 )
 
 if (!areAllRequirementsMet) {
-  // TODO: Add more info here
   console.log('Usage:')
   console.log('')
   console.log('  npx split-mp3 $MP3_FILE $TRACK_DATA_FILE')
+  console.log('')
+  console.log('Read more: https://github.com/bence-toth/split-mp3#readme')
   console.log('')
   shell.exit(1)
 }
