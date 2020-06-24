@@ -4,17 +4,6 @@ const fs = require('fs')
 const shell = require('shelljs')
 const {extractTracksData, addCommandToTrack} = require('./utility')
 
-// Tracks file example:
-// ```
-// 0:00 Paper Earth
-// 4:48 Slideshow
-// 9:53 Wasn't Even There
-// 15:27 Interlude
-// 19:00 Tone My Crazy
-// 24:53 Acceleration
-//
-// ```
-
 if (!shell.which('ffmpeg')) {
   console.log('Sorry, this tool requires ffmpeg')
   console.log('')
