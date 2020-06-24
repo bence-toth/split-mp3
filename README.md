@@ -43,13 +43,21 @@ A few things to note regarding the tracks file:
 
 - The start times for tracks must use the `MM:SS` format. Note that the separator is `:`.
 
-- Leading zeros for the start times will be accepted (`1:23` and `01:23` are both fine).
-
 - The start times and the titles must be separated by exactly one space.
 
 - The track titles must not contain funky characters, they will be used in file names.
 
+  Also, FFMpeg will be called from a shell using a command like this:
+
+  ```
+  ffmpeg -i full.mp3 -acodec copy -ss 83 -to 296 "02 - Second track here.mp3"
+  ```
+
+  Command injections are possible, so be careful.
+
 - Blank lines and tailing white space will be ignored.
+
+- Leading zeros for the start times will be ignored (`1:23` and `01:23` are both accepted).
 
 
 ## Requirements
